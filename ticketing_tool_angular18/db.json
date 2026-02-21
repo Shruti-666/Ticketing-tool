@@ -1,15 +1,76 @@
 {
-  "TicketsNew": {
-    "Login": [
-      {
-        "id": 1,
-        "emailId": "test@example.com",
-        "password": "password",
-        "result": true,
-        "data": { "name": "Test User", "token": "mock-jwt" },
-        "message": "Login successful"
-      }
-      
-    ]
-  }
+  "Login": [
+    {
+      "id": "1",
+      "emailId": "test@example.com",
+      "password": "password",
+      "result": true,
+      "data": {
+        "name": "Test User",
+        "token": "mock-jwt"
+      },
+      "message": "Login successful"
+    }
+  ],
+  "GetDepartments": [
+    {
+      "deptId": 161,
+      "deptName": "ITs",
+      "createdDate": "2026-02-11T00:00:00",
+      "id": "74ed"
+    },
+    {
+      "deptId": 162,
+      "deptName": "HR Dept",
+      "createdDate": "2025-05-09T00:00:00",
+      "id": "e642"
+    },
+    {
+      "deptId": 163,
+      "deptName": "Finance",
+      "createdDate": "2026-02-10T00:00:00",
+      "id": "b9d6"
+    },
+    {
+      "id": "1b02",
+      "deptName": "Software Development",
+      "createdDate": "2026-02-18"
+    },
+    {
+      "id": "4aa1",
+      "deptName": "Software Testing",
+      "createdDate": "2026-01-07"
+    }
+  ],
+  "CreateDepartment": {
+    "message": "",
+    "result": true,
+    "data": null
+  },
+  "UpdateDepartment": {
+    "message": "",
+    "result": true,
+    "data": null
+  },
+  "DeleteDepartment": {
+    "message": "",
+    "result": true,
+    "data": null
+  },
+  "GetParentCategory": [
+    {
+      "id": "pc1",
+      "categoryId": 101,
+      "categoryName": "Hardwares",
+      "deptId": "74ed",
+      "deptName": "ITs"
+    },
+    {
+      "id": "a9cb",
+      "categoryName": "Monitor",
+      "deptId": "4aa1",
+      "deptName": "Software Testing",
+      "categoryId": 1771677155154
+    }
+  ]
 }

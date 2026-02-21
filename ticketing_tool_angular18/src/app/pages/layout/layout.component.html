@@ -1,1 +1,67 @@
-<p>layout works!</p>
+<nav class="saas-navbar navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand brand-logo" href="javascript:void(0)">
+      🎫 SupportDesk
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mynavbar"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="dashboard"
+            routerLinkActive="active-link"
+            >Dashboard</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="department"
+            routerLinkActive="active-link"
+            >Department</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            routerLink="parent-category"
+            routerLinkActive="active-link"
+            >Parent Category</a
+          >
+        </li>
+      </ul>
+
+
+      <!-- Right Section -->
+      <div class="d-flex align-items-center gap-3">
+        <!-- 🌙 Theme Toggle -->
+        <button class="theme-toggle-btn" type="button" (click)="toggleTheme()">
+          {{ currentTheme === "dark" ? "🌙" : "☀️" }}
+        </button>
+
+        <div class="user-pill">👩‍💻 Admin</div>
+
+        <button class="btn btn-logout" type="button" (click)="onLogout()">
+          Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="layout-content p-4">
+  <router-outlet></router-outlet>
+</div>

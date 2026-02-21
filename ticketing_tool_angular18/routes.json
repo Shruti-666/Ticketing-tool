@@ -1,0 +1,5 @@
+{
+  "/api/TicketsNew/Login": "/TicketsNew/Login",
+  "/api/TicketsNew/GetDepartments": "/TicketsNew/GetDepartments",
+  "/api/TicketsNew//CreateDepartment": "/CreateDepartment"
+}

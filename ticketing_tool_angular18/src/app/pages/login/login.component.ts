@@ -8,28 +8,33 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  loginObj: any = {
+    emailId: '',
+    password: '',
+  };
 
-  loginObj:any = {
-  "emailId": "",
-  "password": ""
-}
+  masterSrv = inject(MasterService);
+  router = inject(Router);
 
-masterSrv = inject(MasterService);
-router = inject(Router);
+  onLogin() {
+    console.log(this.loginObj);
 
-onLogin(){ 
-  console.log(this.loginObj);
-  this.masterSrv.login(this.loginObj).subscribe((res: any)=>{
-    if(res.result){
-      localStorage.setItem("ticketUser", JSON.stringify(res.data));
-      this.router.navigateByUrl('/dashboard');
-    }else{
-      alert(res.message);
-    }
-  })
- }
- 
+    this.masterSrv.login(this.loginObj).subscribe((res) => {
+      if (res.length > 0) {
+        const user = res[0];
+
+        if (user.result) {
+          localStorage.setItem('ticketUser', JSON.stringify(user.data));
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          alert(user.message);
+        }
+      } else {
+        alert('Invalid email or password');
+      }
+    });
+  }
 }
