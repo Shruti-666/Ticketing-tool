@@ -1,0 +1,15 @@
+{
+  "TicketsNew": {
+    "Login": [
+      {
+        "id": 1,
+        "emailId": "test@example.com",
+        "password": "password",
+        "result": true,
+        "data": { "name": "Test User", "token": "mock-jwt" },
+        "message": "Login successful"
+      }
+      
+    ]
+  }
+}
