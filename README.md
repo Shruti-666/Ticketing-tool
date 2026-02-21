@@ -1,16 +1,19 @@
 # Ticketing-tool
 # Ticketing Tool - Angular 18
 
-A modern ticketing system application built with **Angular 18**, designed to manage and track support tickets efficiently.
+A comprehensive ticketing system built with Angular 18, featuring user authentication, ticket management, and administrative controls for departments, employees, and categories.
 
 ---
 
 ## Table of Contents
 
 - [Overview](#overview)
+- [Features](#features)
+- [How It Works](#how-it-works)
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation & Setup](#installation--setup)
+- [Database Management](#database-management)
 - [Project Structure](#project-structure)
 - [Development](#development)
 - [Build](#build)
@@ -18,19 +21,70 @@ A modern ticketing system application built with **Angular 18**, designed to man
 - [Useful Commands](#useful-commands)
 - [Configuration](#configuration)
 - [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 
 ---
 
 ## Overview
 
-The Ticketing Tool is a web-based application that allows users to:
-- Create and manage support tickets
-- Track ticket status and progress
-- Organize tickets efficiently
-- Streamline the ticket management workflow
+The Ticketing Tool is a full-stack web application designed for managing support tickets in an organization. It provides a user-friendly interface for creating, tracking, and resolving tickets, while offering administrative features for managing departments, employees, and ticket categories.
 
-This project leverages Angular 18's latest features including standalone components and the modern Angular build system.
+The application uses Angular 18 for the frontend and a mock REST API backend powered by JSON Server for development and testing purposes.
+
+---
+
+## Features
+
+### User Authentication
+- Secure login system
+- Session-based authentication
+- Protected routes for authenticated users
+
+### Ticket Management
+- Create new support tickets
+- View and filter ticket lists
+- Track ticket status and progress
+- Assign tickets to departments and employees
+
+### Administrative Features
+- **Department Management**: Add, edit, and delete departments
+- **Employee Management**: Manage employee records and assignments
+- **Category Management**: Organize tickets with parent and child categories
+  - Parent categories for broad classification
+  - Child categories for detailed sub-classification
+
+### Dashboard
+- Overview of ticket statistics
+- Quick access to recent tickets
+- Navigation to all major features
+
+### Responsive Design
+- Mobile-friendly interface using Bootstrap 5
+- Consistent UI across all pages
+
+---
+
+## How It Works
+
+### Architecture
+The application follows a client-server architecture:
+
+1. **Frontend (Angular 18)**: Handles user interface, routing, and client-side logic
+2. **Backend (JSON Server)**: Provides REST API endpoints for data management
+3. **Proxy Configuration**: Angular's development server proxies API calls to the backend
+
+### Data Flow
+- Users interact with Angular components in the browser
+- Components call services to make HTTP requests
+- Requests are proxied to the JSON Server backend
+- Data is stored and retrieved from the mock database (db.json)
+
+### Key Components
+- **Login Component**: Handles user authentication
+- **Layout Component**: Provides navigation and layout for authenticated pages
+- **Dashboard Component**: Displays overview and statistics
+- **Department/Employee/Category Components**: CRUD operations for administrative data
+- **Ticket Components**: Create and list tickets
+- **Master Service**: Centralized service for all API interactions
 
 ---
 
@@ -38,10 +92,11 @@ This project leverages Angular 18's latest features including standalone compone
 
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| **Angular** | 18.2.0 | Frontend framework |
-| **TypeScript** | 5.5.2 | Programming language |
-| **Bootstrap** | 5.3.8 | CSS framework |
-| **RxJS** | 7.8.0 | Reactive programming |
+| **Angular** | 18.2.0 | Frontend framework with standalone components |
+| **TypeScript** | 5.5.2 | Type-safe programming language |
+| **Bootstrap** | 5.3.8 | Responsive CSS framework |
+| **RxJS** | 7.8.0 | Reactive programming for async operations |
+| **JSON Server** | Latest | Mock REST API backend |
 | **Node.js** | 18+ | Runtime environment |
 | **npm** | 9+ | Package manager |
 
@@ -49,55 +104,71 @@ This project leverages Angular 18's latest features including standalone compone
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed on your system:
-
-### Required Software
-- **Node.js** (v18 or higher) - [Download](https://nodejs.org/)
+- **Node.js** (v18 or higher)
 - **npm** (comes with Node.js)
-- **Git** - [Download](https://git-scm.com/)
+- **Git**
 
-### Verify Installation
-Run the following commands in your terminal to verify installation:
-
+Verify installation:
 ```bash
-node --version    # Should be v18.0.0 or higher
-npm --version     # Should be 9.0.0 or higher
-git --version     # Should be 2.0.0 or higher
+node --version  # v18.0.0+
+npm --version   # 9.0.0+
+git --version   # 2.0.0+
 ```
 
 ---
 
 ## Installation & Setup
 
-### 1. Clone the Repository
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd Ticketing-tool/ticketing_tool_angular18
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Verify setup**:
+   ```bash
+   ng version
+   ```
+
+---
+
+## Database Management
+
+The application uses a mock database for development and testing. The database is managed using JSON Server, which provides a full REST API based on a JSON file.
+
+### Database File
+- **Location**: `db.json`
+- **Structure**: Contains collections for users, departments, employees, categories, and tickets
+
+### Running the Backend
+To start the mock API server:
 
 ```bash
-git clone <repository-url>
-cd Ticketing-tool/ticketing_tool_angular18
+npx json-server db.json --port 3001
 ```
 
-### 2. Install Dependencies
+This will:
+- Start a REST API server on `http://localhost:3001`
+- Provide endpoints like `/api/users`, `/api/departments`, etc.
+- Support full CRUD operations
+- Persist data changes to `db.json`
 
-Install all required npm packages:
+### API Endpoints
+The backend provides the following main endpoints:
+- `GET/POST/PUT/DELETE /api/users` - User management
+- `GET/POST/PUT/DELETE /api/departments` - Department CRUD
+- `GET/POST/PUT/DELETE /api/employees` - Employee CRUD
+- `GET/POST/PUT/DELETE /api/parentcategories` - Parent category CRUD
+- `GET/POST/PUT/DELETE /api/childcategories` - Child category CRUD
+- `GET/POST/PUT/DELETE /api/tickets` - Ticket CRUD
 
-```bash
-npm install
-```
-
-This will download and install:
-- Angular framework and CLI
-- All required dependencies listed in `package.json`
-- Development dependencies for testing and building
-
-### 3. Verify Installation
-
-After installation, verify the setup by checking if Angular CLI is properly installed:
-
-```bash
-ng version
-```
-
-You should see Angular CLI version information if everything is installed correctly.
+### Proxy Configuration
+The `proxy.conf.json` file configures Angular's development server to proxy all `/api/*` requests to `http://localhost:3001`, allowing seamless communication between frontend and backend during development.
 
 ---
 
@@ -105,142 +176,80 @@ You should see Angular CLI version information if everything is installed correc
 
 ```
 ticketing_tool_angular18/
-├── src/                          # Source code directory
-│   ├── app/                       # Application components and logic
-│   │   ├── app.component.ts       # Root component logic
-│   │   ├── app.component.html     # Root component template
-│   │   ├── app.component.css      # Root component styles
-│   │   ├── app.component.spec.ts  # Component unit tests
-│   │   ├── app.config.ts          # App configuration (providers)
-│   │   └── app.routes.ts          # Application routing configuration
-│   ├── main.ts                    # Application entry point
-│   ├── index.html                 # Main HTML file
-│   └── styles.css                 # Global styles
-├── public/                        # Static assets
-├── dist/                          # Build output (generated after build)
-├── angular.json                   # Angular CLI configuration
-├── tsconfig.json                  # TypeScript configuration
-├── package.json                   # Project metadata and dependencies
-└── README.md                      # This file
+├── src/
+│   ├── app/
+│   │   ├── pages/
+│   │   │   ├── login/             # Authentication page
+│   │   │   ├── layout/            # Main layout with navigation
+│   │   │   ├── dashboard/         # Overview dashboard
+│   │   │   ├── department/        # Department management
+│   │   │   ├── employee/          # Employee management
+│   │   │   ├── parentcategory/    # Parent category management
+│   │   │   ├── childcategory/     # Child category management
+│   │   │   ├── new-ticket/        # Ticket creation form
+│   │   │   └── ticket-list/       # Ticket listing and management
+│   │   ├── services/
+│   │   │   └── master.service.ts  # Centralized API service
+│   │   ├── app.routes.ts          # Route definitions
+│   │   └── app.config.ts          # App configuration
+│   ├── main.ts
+│   ├── index.html
+│   └── styles.css
+├── db.json                        # Mock database
+├── proxy.conf.json                # API proxy configuration
+├── angular.json
+├── package.json
+└── README.md
 ```
-
-### Key Files Explained
-
-- **`src/main.ts`** - Application entry point where Angular bootstraps the app
-- **`src/app/app.config.ts`** - Defines providers and global app configuration
-- **`src/app/app.routes.ts`** - Contains route definitions for the application
-- **`angular.json`** - Configuration file for Angular CLI build and development tools
-- **`tsconfig.json`** - TypeScript compiler options and settings
 
 ---
 
 ## Development
 
-### Start Development Server
+### Start the Application
 
-Run the development server:
+1. **Start the backend** (in one terminal):
+   ```bash
+   npx json-server db.json --port 3001
+   ```
 
-```bash
-npm start
-```
+2. **Start the frontend** (in another terminal):
+   ```bash
+   npm start
+   ```
 
-Or alternatively:
+3. **Open in browser**:
+   ```bash
+   "$BROWSER" http://localhost:4200
+   ```
 
-```bash
-ng serve
-```
-
-**Output:**
-The application will be available at `http://localhost:4200/`
-
-**Features:**
-- 🔄 **Hot Reload** - Application automatically refreshes when you save changes
-- 🔍 **Source Maps** - Easy debugging with TypeScript source maps
-- ⚡ **Fast Compilation** - Optimized for development speed
-
-### Open in Browser
-
-Once the server is running, open your browser and navigate to:
-```
-http://localhost:4200/
-```
-
-The page will automatically reload whenever you modify source files.
+### Development Workflow
+- Make changes to Angular components
+- API calls are automatically proxied to the JSON Server
+- Hot reload refreshes the browser on file changes
+- Data persists in `db.json` between sessions
 
 ---
 
+## Build
+
 ### Production Build
-
-Create a production-ready build:
-
 ```bash
 npm run build
 ```
 
-Or use Angular CLI directly:
-
-```bash
-ng build
-```
-
-**Output:**
-- Build artifacts are stored in the `dist/ticketing_tool_angular18/` directory
-- Files are optimized, minified, and ready for deployment
-- Bundle size and performance budgets are enforced (see `angular.json`)
-
 ### Development Build
-
-Create an unoptimized build for debugging:
-
 ```bash
 npm run build -- --configuration development
 ```
-
-### Watch Mode
-
-Build automatically whenever source files change:
-
-```bash
-npm run watch
-```
-
-This is useful during development when you need the built files but not the live server.
 
 ---
 
 ## Testing
 
-### Run Unit Tests
-
-Execute all unit tests:
-
 ```bash
 npm test
 ```
-
-Or using Angular CLI:
-
-```bash
-ng test
-```
-
-**Testing Framework:**
-- **Karma** - Test runner
-- **Jasmine** - Testing framework
-- **Chrome Browser** - Default test browser
-
-**Features:**
-- Tests run in watch mode (re-run on file changes)
-- Coverage reports available
-- Headless mode support for CI/CD
-
-### Generate Coverage Report
-
-```bash
-ng test --browsers=Chrome --code-coverage
-```
-
-Coverage reports will be generated in the `coverage/` directory.
 
 ---
 
@@ -248,159 +257,55 @@ Coverage reports will be generated in the `coverage/` directory.
 
 | Command | Description |
 |---------|-------------|
-| `npm start` | Start the development server on http://localhost:4200 |
-| `npm run build` | Build the project for production |
-| `npm run watch` | Watch and rebuild on file changes |
-| `npm test` | Run unit tests with Karma |
-| `ng generate component <name>` | Create a new component |
-| `ng generate service <name>` | Create a new service |
-| `ng generate module <name>` | Create a new module |
-| `ng lint` | Run code linting (if available) |
-| `ng version` | Display Angular CLI and package versions |
-
-### Examples
-
-**Generate a new component:**
-```bash
-ng generate component tickets/ticket-list
-```
-
-**Generate a service:**
-```bash
-ng generate service services/ticket
-```
+| `npx json-server db.json --port 3001` | Start mock API server |
+| `npm start` | Start Angular dev server |
+| `npm run build` | Build for production |
+| `npm test` | Run unit tests |
 
 ---
 
 ## Configuration
 
-### Angular Configuration (`angular.json`)
-
-Key configurations:
-- **Output Path:** `dist/ticketing_tool_angular18/`
-- **Source Root:** `src/`
-- **Styles:** Bootstrap CSS is included globally
-- **Build Budgets:**
-  - Initial bundle: 500KB warning, 1MB error
-  - Component styles: 2KB warning, 4KB error
-
-### TypeScript Configuration (`tsconfig.json`)
-
-Strict mode is enabled with:
-- `strict: true` - Enables all strict type checking options
-- `noImplicitAny` - Prevent implicit any types
-- `noImplicitReturns` - Require explicit returns
-
-### Bootstrap CSS Framework
-
-Bootstrap 5.3.8 is pre-configured and available globally. Use Bootstrap classes in your templates:
-
-```html
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <button class="btn btn-primary">Click me</button>
-    </div>
-  </div>
-</div>
+### Proxy Configuration (`proxy.conf.json`)
+```json
+{
+  "/api/*": {
+    "target": "http://localhost:3001",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
 ```
+
+### Database Schema (`db.json`)
+Contains initial data for all entities. Modify this file to add sample data or change the schema.
 
 ---
 
 ## Troubleshooting
 
-### Issue: Port 4200 Already in Use
+### Backend Not Starting
+- Ensure port 3001 is available
+- Check if `db.json` exists and is valid JSON
 
-**Solution:** Use a different port:
-```bash
-ng serve --port 4300
-```
-
-### Issue: Module Not Found Errors
-
-**Solution:** Reinstall dependencies:
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Issue: TypeScript Compilation Errors
-
-**Solution:** Clear Angular cache and rebuild:
-```bash
-rm -rf .angular
-npm run build
-```
-
-### Issue: Dependencies Installation Fails
-
-**Solution:** Try clearing npm cache:
-```bash
-npm cache clean --force
-npm install
-```
-
-### Issue: Tests Won't Run
-
-**Solution:** Make sure Chrome is installed, or use headless mode:
-```bash
-npm test -- --browsers=ChromeHeadless
-```
+### API Calls Failing
+- Verify JSON Server is running on port 3001
+- Check proxy configuration in `proxy.conf.json`
 
 ---
-
-## Environment Setup for Different Scenarios
-
-### For Windows Users
-
-1. Open **Command Prompt** or **PowerShell**
-2. Navigate to the project directory
-3. Run commands as specified (they work the same on Windows)
-
-### For macOS Users
-
-1. Open **Terminal**
-2. Navigate to the project directory
-3. Use the same commands
-
-### For Linux Users
-
-1. Open **Terminal**
-2. Navigate to the project directory
-3. Use the same commands
-
----
-
-## Next Steps
-
-1. **Familiarize yourself** with the [Angular Documentation](https://angular.dev/)
-2. **Review the app structure** - Start with `src/app/app.component.ts`
-3. **Create components** - Use `ng generate component` to create new features
-4. **Implement services** - Use `ng generate service` for data management
-5. **Add routes** - Update `src/app/app.routes.ts` for navigation
-6. **Style components** - Use Bootstrap or custom CSS
-7. **Write tests** - Create `.spec.ts` files for your components
-
----
-
-
 
 ## Additional Resources
 
-- [Angular Official Documentation](https://angular.dev/)
-- [Angular CLI Documentation](https://angular.io/cli)
-- [Bootstrap Documentation](https://getbootstrap.com/docs)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [RxJS Documentation](https://rxjs.dev/)
+- [Angular Documentation](https://angular.dev/)
+- [JSON Server Documentation](https://github.com/typicode/json-server)
+- [Bootstrap Documentation](https://getbootstrap.com/)
 
----
+--- 
 
 ## Project Information
 
 - **Project Name:** Ticketing Tool Angular 18
 - **Angular Version:** 18.2.21
 - **Node Version Required:** 18+
-
-
----
+- **Database:** Mock JSON Server (for development)
 
